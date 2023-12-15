@@ -17,7 +17,20 @@ jobs:
 
       - name: Bump Patch Version
         run: |
-          yq e '.version |= .+ ".1"' -i charts/libretranslate/Chart.yaml
+          # Read the current version
+          version=$(yq e '.version' charts/libretranslate/Chart.yaml)
+          
+          # Split the version into major, minor, and patch
+          IFS='.' read -ra VERSION_PARTS <<< "$version"
+          
+          # Increment the minor version
+          VERSION_PARTS[2]=$((VERSION_PARTS[2] + 1))
+          
+          # Reassemble the version string
+          new_version="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
+          
+          # Update the version in the Chart.yaml file
+          yq e ".version = \"$new_version\"" -i charts/libretranslate/Chart.yaml
 
       - name: Commit and Push
         run: |
@@ -47,5 +60,9 @@ jobs:
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
+        with:
+          skip_existing: true
+          mark_as_latest: true
+          packages_with_index: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
