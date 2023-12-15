@@ -1,4 +1,9 @@
 apiVersion: v2
 name: libretranslate
 description: A Helm chart for Kubernetes to deploy LibreTranslate API
+home: https://libretranslate.github.io/helm-chart/
+sources:
+  - https://github.com/LibreTranslate/LibreTranslate/
+  - https://github.com/LibreTranslate/helm-chart/
+icon: https://libretranslate.com/static/favicon.ico
 version: 0.0.0
