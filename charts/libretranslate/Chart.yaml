@@ -1,4 +1,4 @@
 apiVersion: v2
 name: libretranslate
 description: A Helm chart for Kubernetes to deploy LibreTranslate API
-version: 0.0.1
+version: 0.0.0
